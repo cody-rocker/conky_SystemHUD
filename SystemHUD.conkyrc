@@ -1,0 +1,154 @@
+# ARCH-CONKY
+#
+
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_argb_visual yes
+own_window_type conky
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# fiddle with window
+use_xft yes
+
+# Update interval in seconds
+update_interval 2.0
+
+# Minimum size of text area
+minimum_size 300 800
+
+# Draw shades?
+draw_shades no
+
+# Text stuff
+draw_outline no # amplifies text if yes
+draw_borders no
+draw_graph_borders no
+show_graph_scale no
+show_graph_range no
+stippled_borders 8
+xftfont white-rabbit
+xftalpha 0.8
+uppercase no # set to yes if you want all text to be in uppercase
+
+# Default colors and also border colors, grey90 == #e5e5e5
+default_color white
+color1 84a3bf  # light blue
+color2 314f83  # dark blue
+color3 1793d0  # arch blue
+# Shades of Gray
+color4 DDDDDD
+color5 AAAAAA
+color6 888888
+# Colors
+color7 FF5C2B  # orange
+color8 77B753  # green
+
+# Text alignment, other possible values are commented
+alignment top_right
+
+# Gap between borders of screen and text
+gap_x 10
+gap_y 10
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+text_buffer_size 1024
+
+# stuff after ‘TEXT’ will be formatted on screen
+
+TEXT
+${color1}${font Hyperion Sunset (BRK):size=32}${alignr}${voffset 20}${time %l:%M}$color
+${font White Rabbit:size=12}${alignr}${offset -150}${voffset -57}${time %a, }${time %B %e %G}
+${font White Rabbit:size=8}${alignr}${offset -150}UpTime: ${uptime}
+${stippled_hr 1}
+${color1}VLC:${color} ${scroll 24 ${execpi 60 python2 vlc_status.py}} $alignr$color1${font White Rabbit:size=10}${nodename}$color
+
+# === Machine Info ===
+${font Hyperion Sunset (BRK):size=8}${color1}System ${color}${stippled_hr 1}${color5}${font White Rabbit:size=8:weight=bold}
+${voffset 3}${font White Rabbit:size=8}${alignc}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
+${alignc}${execi 1000 lsb_release -ds} >> $kernel$machine
+
+# === CPU ===
+${voffset 3}${font White Rabbit:size=8:weight=bold}${color}CPU ${color5}:: ${color}${hwmon 0 temp 1}°C${alignr}${cpu cpu0}%
+${color1}${cpubar cpu0 5,}${font White Rabbit:size=8}
+${voffset 3}${offset 20}${color}${top pid 1} > ${top name 1}${alignr}${top cpu 1}%
+${offset 20}${color4}${top pid 2} > ${top name 2}${alignr}${top cpu 2}%
+${offset 20}${color4}${top pid 3} > ${top name 3}${alignr}${top cpu 3}%
+${offset 20}${color5}${top pid 4} > ${top name 4}${alignr}${top cpu 4}%
+${offset 20}${color6}${top pid 5} > ${top name 5}${alignr}${top cpu 5}%
+${color5}${font White Rabbit:size=8:weight=bold}
+# === RAM/SWAP ===
+${voffset 3}${color}RAM ${alignc}               ${color4}$mem ${color5}/${color} $memmax ${alignr}${memperc}%
+${color1}${membar 6,}
+${voffset 3}${color}Swap ${alignc}              ${color4}${swap} ${color5}/${color} ${swapmax} ${alignr}${swapperc}%
+${color1}${swapbar 6,}${font White Rabbit:size=8}
+${voffset 3}${offset 20}${color}${top_mem pid 1} > ${top_mem name 1}${alignr}${top_mem mem_res 1}
+${offset 20}${color4}${top_mem pid 2} > ${top_mem name 2}${alignr}${top_mem mem_res 2}
+${offset 20}${color4}${top_mem pid 3} > ${top_mem name 3}${alignr}${top_mem mem_res 3}
+${offset 20}${color5}${top_mem pid 4} > ${top_mem name 4}${alignr}${top_mem mem_res 4}
+${offset 20}${color6}${top_mem pid 5} > ${top_mem name 5}${alignr}${top_mem mem_res 5}
+${color5}${font White Rabbit:size=8:weight=bold}
+# === Disk ===
+${voffset 3}${color}Disk ${color5}::${color} /root ${alignc}         ${color4}${fs_used} ${color5}/${color} ${fs_size} ${alignr}${fs_used_perc /}%
+${color1}${fs_bar 6, 325 /}
+${voffset 3}${color}Disk ${color5}::${color} /home ${alignc}          ${color4}${fs_used /home} ${color5}/${color} ${fs_size /home} ${alignr}${fs_used_perc /home}%
+${color1}${fs_bar 6,325 /home}
+${voffset 3}${color}DiskIO ${color5}::${color} ${diskio /dev/sda} ${alignr}${color4}Filesystem: ${fs_type}
+
+# === Network ===
+${font Hyperion Sunset (BRK):size=8}${color1}Network ${color}${stippled_hr 1}
+${voffset 3}${font White Rabbit:size=8:weight=bold}${color}${offset 15}${wireless_essid} ${color5}::${color} ${if_up wlan0}${addr wlan0}$else${if_up wlp12s0}${addr wlp12s0}$endif${goto 234}Down ${color3}<< ${color4}${alignr}${if_up wlan0}${downspeed wlan0}$else${if_up wlp12s0}${downspeed wlp12s0}$endif
+${color}${offset 15}Users ${color5}::${color} ${user_number}${goto 245}Up ${color7}>> ${color4}${alignr}${if_up wlan0}${upspeed wlan0}$else${if_up wlp12s0}${upspeed wlp12s0}$endif
+
+# IN CONNECTIONS
+${if_match ${tcp_portmon 1 32767 count} > 0}${font White Rabbit:size=8:weight=bold}${voffset 3}${color}In ${color5}::${color} ${tcp_portmon 1 32767 count} ${color5}${stippled_hr 1}${color4}${font White Rabbit:size=8}${if_match ${tcp_portmon 1 32767 count} > 0}
+${voffset 3}${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 0}} ${alignr}${tcp_portmon 1 32767 lservice 0} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 1}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 1}} ${alignr}${tcp_portmon 1 32767 lservice 1} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 2}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 2}} ${alignr}${tcp_portmon 1 32767 lservice 2} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 3}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 3}} ${alignr}${tcp_portmon 1 32767 lservice 3} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 4}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 4}} ${alignr}${tcp_portmon 1 32767 lservice 4} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 5}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 5}} ${alignr}${tcp_portmon 1 32767 lservice 5} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 6}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 6}} ${alignr}${tcp_portmon 1 32767 lservice 6} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 7}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 7}} ${alignr}${tcp_portmon 1 32767 lservice 7} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 8}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 8}} ${alignr}${tcp_portmon 1 32767 lservice 8} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 9}
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 9}} ${alignr}${tcp_portmon 1 32767 lservice 9} ${color3}<<${color4}$endif
+$endif
+# OUT CONNECTIONS
+${if_match ${tcp_portmon 32768 61000 count} > 0}${font White Rabbit:size=8:weight=bold}${voffset 3}${color}Out ${color5}::${color} ${tcp_portmon 32768 61000 count} ${color5}${stippled_hr 1}${color4}${font White Rabbit:size=8}${if_match ${tcp_portmon 32768 61000 count} > 0}
+${voffset 3}${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 0}} ${alignr}${tcp_portmon 32768 61000 rport 0} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 1}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 1}} ${alignr}${tcp_portmon 32768 61000 rport 1} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 2}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 2}} ${alignr}${tcp_portmon 32768 61000 rport 2} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 3}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 3}} ${alignr}${tcp_portmon 32768 61000 rport 3} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 4}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 4}} ${alignr}${tcp_portmon 32768 61000 rport 4} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 5}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 5}} ${alignr}${tcp_portmon 32768 61000 rport 5} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 6}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 6}} ${alignr}${tcp_portmon 32768 61000 rport 6} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 7}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 7}} ${alignr}${tcp_portmon 32768 61000 rport 7} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 8}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 8}} ${alignr}${tcp_portmon 32768 61000 rport 8} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 9}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 9}} ${alignr}${tcp_portmon 32768 61000 rport 9} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 10}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 10}} ${alignr}${tcp_portmon 32768 61000 rport 10} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 11}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 11}} ${alignr}${tcp_portmon 32768 61000 rport 11} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 12}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 12}} ${alignr}${tcp_portmon 32768 61000 rport 12} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 13}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 13}} ${alignr}${tcp_portmon 32768 61000 rport 13} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 14}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 14}} ${alignr}${tcp_portmon 32768 61000 rport 14} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 15}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 15}} ${alignr}${tcp_portmon 32768 61000 rport 15} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 16}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 16}} ${alignr}${tcp_portmon 32768 61000 rport 16} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 17}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 17}} ${alignr}${tcp_portmon 32768 61000 rport 17} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 18}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 18}} ${alignr}${tcp_portmon 32768 61000 rport 18} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 19}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 19}} ${alignr}${tcp_portmon 32768 61000 rport 19} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 20}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 20}} ${alignr}${tcp_portmon 32768 61000 rport 20} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 21}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 21}} ${alignr}${tcp_portmon 32768 61000 rport 21} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 22}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 22}} ${alignr}${tcp_portmon 32768 61000 rport 22} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 23}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 23}} ${alignr}${tcp_portmon 32768 61000 rport 23} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 24}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 24}} ${alignr}${tcp_portmon 32768 61000 rport 24} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 25}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 25}} ${alignr}${tcp_portmon 32768 61000 rport 25} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 26}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 26}} ${alignr}${tcp_portmon 32768 61000 rport 26} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 27}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 27}} ${alignr}${tcp_portmon 32768 61000 rport 27} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 28}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 28}} ${alignr}${tcp_portmon 32768 61000 rport 28} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 29}
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 29}} ${alignr}${tcp_portmon 32768 61000 rport 29} ${color7}>>${color4}$endif
+$endif
