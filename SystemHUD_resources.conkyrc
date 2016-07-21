@@ -1,0 +1,97 @@
+# ARCH-CONKY
+#
+
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_argb_visual yes
+own_window_type conky
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# fiddle with window
+use_xft yes
+
+# Update interval in seconds
+update_interval 2.0
+
+# Minimum size of text area
+minimum_size 300 350
+
+# Draw shades?
+draw_shades no
+
+# Text stuff
+draw_outline no # amplifies text if yes
+draw_borders no
+draw_graph_borders no
+show_graph_scale no
+show_graph_range no
+stippled_borders 8
+xftfont white-rabbit
+xftalpha 0.8
+uppercase no # set to yes if you want all text to be in uppercase
+
+# Default colors and also border colors, grey90 == #e5e5e5
+default_color white
+color1 84a3bf  # light blue
+color2 314f83  # dark blue
+color3 1793d0  # arch blue
+# Shades of Gray
+color4 DDDDDD
+color5 AAAAAA
+color6 888888
+# Colors
+color7 FF5C2B  # orange
+color8 77B753  # green
+
+# Text alignment, other possible values are commented
+alignment top_right
+
+# Gap between borders of screen and text
+gap_x 10
+gap_y 10
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+text_buffer_size 1024
+
+# stuff after ‘TEXT’ will be formatted on screen
+
+TEXT
+# === Machine Info ===
+${font Hyperion Sunset (BRK):size=8}${color1}System ${color}${stippled_hr 1}${color5}${font White Rabbit:size=8:weight=bold}
+${voffset 3}${font White Rabbit:size=8}${alignc}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
+${alignc}${execi 1000 lsb_release -ds} >> $kernel$machine
+
+# === CPU ===
+${voffset 3}${font White Rabbit:size=8:weight=bold}${color}CPU ${color5}:: ${color}${hwmon 0 temp 1}°C${alignr}${cpu cpu0}%
+${color1}${cpubar cpu0 5,}${font White Rabbit:size=8}
+${voffset 3}${offset 20}${color}${top pid 1} > ${top name 1}${alignr}${top cpu 1}%
+${offset 20}${color4}${top pid 2} > ${top name 2}${alignr}${top cpu 2}%
+${offset 20}${color4}${top pid 3} > ${top name 3}${alignr}${top cpu 3}%
+${offset 20}${color5}${top pid 4} > ${top name 4}${alignr}${top cpu 4}%
+${offset 20}${color6}${top pid 5} > ${top name 5}${alignr}${top cpu 5}%
+${color5}${font White Rabbit:size=8:weight=bold}
+# === RAM/SWAP ===
+${voffset 3}${color}RAM ${alignc}               ${color4}$mem ${color5}/${color} $memmax ${alignr}${memperc}%
+${color1}${membar 6,}
+${voffset 3}${color}Swap ${alignc}              ${color4}${swap} ${color5}/${color} ${swapmax} ${alignr}${swapperc}%
+${color1}${swapbar 6,}${font White Rabbit:size=8}
+${voffset 3}${offset 20}${color}${top_mem pid 1} > ${top_mem name 1}${alignr}${top_mem mem_res 1}
+${offset 20}${color4}${top_mem pid 2} > ${top_mem name 2}${alignr}${top_mem mem_res 2}
+${offset 20}${color4}${top_mem pid 3} > ${top_mem name 3}${alignr}${top_mem mem_res 3}
+${offset 20}${color5}${top_mem pid 4} > ${top_mem name 4}${alignr}${top_mem mem_res 4}
+${offset 20}${color6}${top_mem pid 5} > ${top_mem name 5}${alignr}${top_mem mem_res 5}
+${color5}${font White Rabbit:size=8:weight=bold}
+# === Disk ===
+${voffset 3}${color}Disk ${color5}::${color} /root ${alignc}         ${color4}${fs_used} ${color5}/${color} ${fs_size} ${alignr}${fs_used_perc /}%
+${color1}${fs_bar 6, 325 /}
+${voffset 3}${color}Disk ${color5}::${color} /home ${alignc}          ${color4}${fs_used /home} ${color5}/${color} ${fs_size /home} ${alignr}${fs_used_perc /home}%
+${color1}${fs_bar 6,325 /home}
+${voffset 3}${color}DiskIO ${color5}::${color} ${diskio /dev/sda} ${alignr}${color4}Filesystem: ${fs_type}
+
