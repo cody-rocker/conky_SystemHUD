@@ -65,7 +65,6 @@ TEXT
 ${font Hyperion Sunset (BRK):size=8}${color1}Network ${color}${stippled_hr 1}
 ${voffset 3}${font White Rabbit:size=8:weight=bold}${color}${offset 15}${wireless_essid} ${color5}::${color} ${if_up wlan0}${addr wlan0}$else${if_up wlp12s0}${addr wlp12s0}$endif${goto 234}Down ${color3}<< ${color4}${alignr}${if_up wlan0}${downspeed wlan0}$else${if_up wlp12s0}${downspeed wlp12s0}$endif
 ${color}${offset 15}Users ${color5}::${color} ${user_number}${goto 245}Up ${color7}>> ${color4}${alignr}${if_up wlan0}${upspeed wlan0}$else${if_up wlp12s0}${upspeed wlp12s0}$endif
-
 # IN CONNECTIONS
 ${if_match ${tcp_portmon 1 32767 count} > 0}${font White Rabbit:size=8:weight=bold}${voffset 3}${color}In ${color5}::${color} ${tcp_portmon 1 32767 count} ${color5}${stippled_hr 1}${color4}${font White Rabbit:size=8}$endif${if_match ${tcp_portmon 1 32767 count} > 0}
 ${voffset 3}${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 0}} ${alignr}${tcp_portmon 1 32767 lservice 0} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 1}
@@ -77,8 +76,7 @@ ${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 5}} ${alignr}${tcp_portmon 1
 ${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 6}} ${alignr}${tcp_portmon 1 32767 lservice 6} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 7}
 ${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 7}} ${alignr}${tcp_portmon 1 32767 lservice 7} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 8}
 ${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 8}} ${alignr}${tcp_portmon 1 32767 lservice 8} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 9}
-${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 9}} ${alignr}${tcp_portmon 1 32767 lservice 9} ${color3}<<${color4}$endif
-$endif
+${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 9}} ${alignr}${tcp_portmon 1 32767 lservice 9} ${color3}<<${color4}$endif$endif
 # OUT CONNECTIONS
 ${if_match ${tcp_portmon 32768 61000 count} > 0}${font White Rabbit:size=8:weight=bold}${voffset 3}${color}Out ${color5}::${color} ${tcp_portmon 32768 61000 count} ${color5}${stippled_hr 1}${color4}${font White Rabbit:size=8}$endif${if_match ${tcp_portmon 32768 61000 count} > 0}
 ${voffset 3}${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 0}} ${alignr}${tcp_portmon 32768 61000 rport 0} ${color7}>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 1}
