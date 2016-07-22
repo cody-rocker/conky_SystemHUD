@@ -1,0 +1,28 @@
+# ARCH-CONKY
+# Create own window instead of using desktop (required in nautilus)
+own_window yes
+own_window_argb_visual yes
+own_window_type conky
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# fiddle with window
+use_xft yes
+
+# Update interval in seconds
+update_interval 3000.0
+
+# Minimum size of text area
+minimum_size 350 768
+
+# Draw shades?
+draw_shades no
+
+alignment top_right
+
+TEXT
+${voffset -10}
+${image ./panel_bg.png -s 350x768}
