@@ -18,7 +18,7 @@ use_xft yes
 update_interval 2.0
 
 # Minimum size of text area
-minimum_size 300 80
+minimum_size 325 80
 
 # Draw shades?
 draw_shades no
