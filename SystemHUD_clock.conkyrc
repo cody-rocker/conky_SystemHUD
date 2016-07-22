@@ -51,8 +51,8 @@ color8 77B753  # green
 alignment top_right
 
 # Gap between borders of screen and text
-gap_x 10
-gap_y 10
+gap_x 0
+gap_y 5
 
 # number of cpu samples to average
 # set to 1 to disable averaging
@@ -63,6 +63,7 @@ text_buffer_size 1024
 # stuff after ‘TEXT’ will be formatted on screen
 
 TEXT
+${voffset -35}
 ${color1}${font Hyperion Sunset (BRK):size=32}${alignr}${voffset 20}${time %l:%M}$color
 ${font White Rabbit:size=12}${alignr}${offset -150}${voffset -57}${time %a, }${time %B %e %G}
 ${font White Rabbit:size=8}${alignr}${offset -150}UpTime: ${uptime}

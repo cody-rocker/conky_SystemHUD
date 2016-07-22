@@ -51,8 +51,8 @@ color8 77B753  # green
 alignment top_right
 
 # Gap between borders of screen and text
-gap_x 10
-gap_y 10
+gap_x 5
+gap_y 65
 
 # number of cpu samples to average
 # set to 1 to disable averaging

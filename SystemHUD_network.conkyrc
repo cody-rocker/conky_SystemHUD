@@ -46,11 +46,11 @@ color7 FF5C2B  # orange
 color8 77B753  # green
 
 # Text alignment, other possible values are commented
-alignment bottom_right
+alignment top_right
 
 # Gap between borders of screen and text
-gap_x 10
-gap_y 10
+gap_x 5
+gap_y 370
 
 # number of cpu samples to average
 # set to 1 to disable averaging
