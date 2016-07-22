@@ -64,9 +64,9 @@ TEXT
 # === Network ===
 ${font Hyperion Sunset (BRK):size=8}${color1}Network ${color}${stippled_hr 1}
 ${voffset 3}${font White Rabbit:size=8:weight=bold}${color}${offset 15}${wireless_essid} ${color5}::${color} ${if_up wlan0}${addr wlan0}$else${if_up wlp12s0}${addr wlp12s0}$endif${goto 234}Down ${color3}<< ${color4}${alignr}${if_up wlan0}${downspeed wlan0}$else${if_up wlp12s0}${downspeed wlp12s0}$endif
-${color}${offset 15}Users ${color5}::${color} ${user_number}${goto 245}Up ${color7}>> ${color4}${alignr}${if_up wlan0}${upspeed wlan0}$else${if_up wlp12s0}${upspeed wlp12s0}
+${color}${offset 15}Users ${color5}::${color} ${user_number}${goto 245}Up ${color7}>> ${color4}${alignr}${if_up wlan0}${upspeed wlan0}$else${if_up wlp12s0}${upspeed wlp12s0}$endif
 # IN CONNECTIONS
-${if_match ${tcp_portmon 1 32767 count} > 0}${font White Rabbit:size=8:weight=bold}${voffset 3}${color}In ${color5}::${color} ${tcp_portmon 1 32767 count} ${color5}${stippled_hr 1}${color4}${font White Rabbit:size=8}$endif${if_match ${tcp_portmon 1 32767 count} > 0}
+${if_match ${tcp_portmon 1 32767 count} > 0}${font White Rabbit:size=8:weight=bold}${voffset 3}${color}In ${color5}::${color} ${tcp_portmon 1 32767 count} ${color5}${stippled_hr 1}${color4}${font White Rabbit:size=8}${if_match ${tcp_portmon 1 32767 count} > 0}
 ${voffset 3}${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 0}} ${alignr}${tcp_portmon 1 32767 lservice 0} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 1}
 ${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 1}} ${alignr}${tcp_portmon 1 32767 lservice 1} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 2}
 ${offset 15}${scroll 40 ${tcp_portmon 1 32767 rhost 2}} ${alignr}${tcp_portmon 1 32767 lservice 2} ${color3}<<${color4}$endif${if_match ${tcp_portmon 1 32767 count} > 3}
@@ -103,4 +103,4 @@ ${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 20}} ${alignr}${tcp_port
 ${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 21}} ${alignr}${tcp_portmon 32768 61000 rport 21} ${if_match ${tcp_portmon 32768 61000 rport 21} == 443}${color8}$else${color7}$endif>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 22}
 ${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 22}} ${alignr}${tcp_portmon 32768 61000 rport 22} ${if_match ${tcp_portmon 32768 61000 rport 22} == 443}${color8}$else${color7}$endif>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 23}
 ${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 23}} ${alignr}${tcp_portmon 32768 61000 rport 23} ${if_match ${tcp_portmon 32768 61000 rport 23} == 443}${color8}$else${color7}$endif>>${color4}$endif${if_match ${tcp_portmon 32768 61000 count} > 24}
-${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 24}} ${alignr}${tcp_portmon 32768 61000 rport 24} ${if_match ${tcp_portmon 32768 61000 rport 24} == 443}${color8}$else${color7}$endif>>${color4}$endif$endif
+${offset 15}${scroll 40 ${tcp_portmon 32768 61000 rhost 24}} ${alignr}${tcp_portmon 32768 61000 rport 24} ${if_match ${tcp_portmon 32768 61000 rport 24} == 443}${color8}$else${color7}$endif>>${color4}$endif
