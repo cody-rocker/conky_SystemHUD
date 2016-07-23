@@ -32,8 +32,15 @@ def get_status():
 def extract_data(json_obj):
     meta = {}
     if json_obj['state'] == 'playing':
-        meta['artist'] = json_obj['information']['category']['meta']['artist']
-        meta['title'] = json_obj['information']['category']['meta']['title']
+        # print(json_obj)
+        try:
+            meta['artist'] = json_obj['information']['category']['meta']['artist']
+        except KeyError:
+            meta['artist'] = ""
+        try:
+            meta['title'] = json_obj['information']['category']['meta']['title']
+        except KeyError:
+            meta['title'] = json_obj['information']['category']['meta']['filename']
         # Soundcloud meta
         # meta['genre'] = json_obj['information']['category']['meta']['genre']
         # meta['art'] = json_obj['information']['category']['meta']['url']
