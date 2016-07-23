@@ -30,31 +30,35 @@ def get_status():
 
 
 def extract_data(json_obj):
+    tokens = ['artist', 'title', 'filename', 'genre', 'art']
     meta = {}
     if json_obj['state'] == 'playing':
         # print(json_obj)
-        try:
-            meta['artist'] = json_obj['information']['category']['meta']['artist']
-        except KeyError:
-            meta['artist'] = ""
-        try:
-            meta['title'] = json_obj['information']['category']['meta']['title']
-        except KeyError:
-            meta['title'] = json_obj['information']['category']['meta']['filename']
-        # Soundcloud meta
-        # meta['genre'] = json_obj['information']['category']['meta']['genre']
-        # meta['art'] = json_obj['information']['category']['meta']['url']
+        for token in tokens:
+            try:
+                meta[token] = json_obj['information']['category']['meta'][token]
+            except KeyError:
+                pass
     else:
         return None
     return meta
 
 
+def format_response(meta):
+    tokens = ['artist', 'title', 'filename', 'genre']
+    response = ""
+    for token in tokens:
+        try:
+            response = response + meta[token] + " - "
+        except:
+            pass
+    return response
+
 
 json_obj = get_status()
 now_playing = extract_data(json_obj)
 if now_playing is not None:
-    print ('{artist} - {title}'.format(
-        artist=now_playing['artist'], title=now_playing['title']))
+    print (format_response(now_playing))
 else:
     print('')
 
