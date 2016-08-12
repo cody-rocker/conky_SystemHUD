@@ -62,7 +62,7 @@ text_buffer_size 1024
 
 TEXT
 # === Network ===
-${font Hyperion Sunset (BRK):size=8}${color1}Network ${color}${stippled_hr 1}
+${font Hyperion Sunset (BRK):size=8}${color1}Network ${stippled_hr 1}${color}
 ${voffset 3}${font White Rabbit:size=8:weight=bold}${color}${offset 15}${wireless_essid} ${color5}::${color} ${if_up wlan0}${addr wlan0}$else${if_up wlp12s0}${addr wlp12s0}$endif${goto 234}Down ${color3}<< ${color4}${alignr}${if_up wlan0}${downspeed wlan0}$else${if_up wlp12s0}${downspeed wlp12s0}$endif
 ${color}${offset 15}Users ${color5}::${color} ${user_number}${goto 245}Up ${color7}>> ${color4}${alignr}${if_up wlan0}${upspeed wlan0}$else${if_up wlp12s0}${upspeed wlp12s0}$endif
 # IN CONNECTIONS

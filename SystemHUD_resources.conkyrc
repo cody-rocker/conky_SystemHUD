@@ -64,7 +64,7 @@ text_buffer_size 1024
 
 TEXT
 # === Machine Info ===
-${font Hyperion Sunset (BRK):size=8}${color1}System ${color}${stippled_hr 1}${color5}${font White Rabbit:size=8:weight=bold}
+${font Hyperion Sunset (BRK):size=8}${color1}System ${stippled_hr 1}${color}${color5}${font White Rabbit:size=8:weight=bold}
 ${voffset 3}${font White Rabbit:size=8}${alignc}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}
 ${alignc}${execi 1000 lsb_release -ds} >> $kernel$machine
 

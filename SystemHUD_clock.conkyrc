@@ -67,5 +67,5 @@ ${voffset -35}
 ${color1}${font Hyperion Sunset (BRK):size=32}${alignr}${voffset 20}${time %l:%M}$color
 ${font White Rabbit:size=12}${alignr}${offset -150}${voffset -57}${time %a, }${time %B %e %G}
 ${font White Rabbit:size=8}${alignr}${offset -150}UpTime: ${uptime}
-${stippled_hr 1}
-${color1}VLC:${color} ${scroll 24 ${execpi 60 python2 vlc_status.py}} $alignr$color1${font White Rabbit:size=10}${nodename}$color
+$color1${stippled_hr 1}$color
+${color1}VLC:${color} ${scroll 24 ${execpi 60 python2 vlc_status.py}} $alignr${font White Rabbit:size=10}${nodename}$color
